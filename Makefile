@@ -6,7 +6,7 @@
 #    By: swaegene <swaegene@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/22 13:33:22 by swaegene          #+#    #+#              #
-#    Updated: 2022/03/22 14:38:18 by swaegene         ###   ########.fr        #
+#    Updated: 2022/03/22 18:20:52 by swaegene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SERVER = server
 CLIENT = client
 
 FT_PRINTF = libftprintf.a
+LIBFT = libft.a
 
 MKDIR = mkdir
 RM = rm -f
@@ -26,6 +27,7 @@ SRC_DIR = ./src/
 INC_DIR = ./include/
 FT_PRINTF_DIR = ./ft_printf/
 FT_PRINTF_INC_DIR = $(FT_PRINTF_DIR)include/
+LIBFT_DIR = ./libft/
 
 ifdef MAKE_DEBUG
 OUT_DIR = ./debug/
@@ -40,10 +42,10 @@ endif
 
 CC = gcc
 CFLAGS += -Wall -Werror -Wextra
-CPPFLAGS += -I$(INC_DIR) -I$(FT_PRINTF_INC_DIR) -MD
-LDFLAGS += -L$(FT_PRINTF_DIR) -lftprintf
+CPPFLAGS += -I$(INC_DIR) -I$(FT_PRINTF_INC_DIR) -I$(LIBFT_DIR) -MD
+LDFLAGS += -L$(FT_PRINTF_DIR) -lftprintf -L$(LIBFT_DIR) -lft
 
-CLIENT_SRCS = client.c
+CLIENT_SRCS = client.c signal_sender.c
 SERVER_SRCS = server.c
 CLIENT_OBJS = $(addprefix $(OUT_DIR),$(CLIENT_SRCS:%.c=%.o))
 SERVER_OBJS = $(addprefix $(OUT_DIR),$(SERVER_SRCS:%.c=%.o))
@@ -52,10 +54,10 @@ SERVER_DEPS = $(addprefix $(OUT_DIR),$(SERVER_SRCS:%.c=%.d))
 
 $(NAME): $(SERVER) $(CLIENT)
 
-$(CLIENT): $(DIRS) $(CLIENT_OBJS) $(FT_PRINTF_DIR)$(FT_PRINTF)
+$(CLIENT): $(DIRS) $(CLIENT_OBJS) $(FT_PRINTF_DIR)$(FT_PRINTF) $(LIBFT_DIR)$(LIBFT)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(CLIENT_OBJS) -o $@
 
-$(SERVER): $(DIRS) $(SERVER_OBJS) $(FT_PRINTF_DIR)$(FT_PRINTF)
+$(SERVER): $(DIRS) $(SERVER_OBJS) $(FT_PRINTF_DIR)$(FT_PRINTF) $(LIBFT_DIR)$(LIBFT)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(SERVER_OBJS) -o $@
 
 all: $(NAME)
@@ -63,7 +65,10 @@ all: $(NAME)
 bonus: $(NAME)
 
 $(FT_PRINTF_DIR)$(FT_PRINTF):
-	$(MAKE) -C $(FT_PRINTF_DIR) bonus
+	$(MAKE) -C $(FT_PRINTF_DIR)
+
+$(LIBFT_DIR)$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
 
 $(OUT_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) $< -c -o $@
