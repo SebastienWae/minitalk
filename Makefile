@@ -6,7 +6,7 @@
 #    By: swaegene <swaegene@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/22 13:33:22 by swaegene          #+#    #+#              #
-#    Updated: 2022/03/22 14:23:52 by swaegene         ###   ########.fr        #
+#    Updated: 2022/03/22 14:38:18 by swaegene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,15 +32,16 @@ OUT_DIR = ./debug/
 NAME := $(OUT_DIR)$(NAME)
 SERVER := $(OUT_DIR)$(SERVER)
 CLIENT := $(OUT_DIR)$(CLIENT)
-DIRS += $(OUT_DIR)
+DIRS = $(OUT_DIR)
 CFLAGS = -g3 -fsanitize=address
 else
 OUT_DIR = ./
 endif
 
 CC = gcc
-CFLAGS += -Wall -Werror -Wextra -MD
-CPPFLAGS += -I$(INC_DIR) -I$(FT_PRINTF_INC_DIR)
+CFLAGS += -Wall -Werror -Wextra
+CPPFLAGS += -I$(INC_DIR) -I$(FT_PRINTF_INC_DIR) -MD
+LDFLAGS += -L$(FT_PRINTF_DIR) -lftprintf
 
 CLIENT_SRCS = client.c
 SERVER_SRCS = server.c
@@ -52,8 +53,10 @@ SERVER_DEPS = $(addprefix $(OUT_DIR),$(SERVER_SRCS:%.c=%.d))
 $(NAME): $(SERVER) $(CLIENT)
 
 $(CLIENT): $(DIRS) $(CLIENT_OBJS) $(FT_PRINTF_DIR)$(FT_PRINTF)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CLIENT_OBJS) -o $@
 
 $(SERVER): $(DIRS) $(SERVER_OBJS) $(FT_PRINTF_DIR)$(FT_PRINTF)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SERVER_OBJS) -o $@
 
 all: $(NAME)
 
