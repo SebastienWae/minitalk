@@ -5,5 +5,6 @@ CompileFlags:
     -Wextra,
     -I../include,
     -I../ft_printf/include,
+    -I../libft,
     -I/goinfre/swaegene/homebrew/include,
   ]
