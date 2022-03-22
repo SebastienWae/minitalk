@@ -6,7 +6,7 @@
 #    By: swaegene <swaegene@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/22 13:33:22 by swaegene          #+#    #+#              #
-#    Updated: 2022/03/22 14:07:00 by swaegene         ###   ########.fr        #
+#    Updated: 2022/03/22 14:23:52 by swaegene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ MV = mv
 SRC_DIR = ./src/
 INC_DIR = ./include/
 FT_PRINTF_DIR = ./ft_printf/
-FT_PRINTF_INC_DIR = $(FT_PRINTF_DIR)/include/
+FT_PRINTF_INC_DIR = $(FT_PRINTF_DIR)include/
 
 ifdef MAKE_DEBUG
 OUT_DIR = ./debug/
@@ -46,6 +46,8 @@ CLIENT_SRCS = client.c
 SERVER_SRCS = server.c
 CLIENT_OBJS = $(addprefix $(OUT_DIR),$(CLIENT_SRCS:%.c=%.o))
 SERVER_OBJS = $(addprefix $(OUT_DIR),$(SERVER_SRCS:%.c=%.o))
+CLIENT_DEPS = $(addprefix $(OUT_DIR),$(CLIENT_SRCS:%.c=%.d))
+SERVER_DEPS = $(addprefix $(OUT_DIR),$(SERVER_SRCS:%.c=%.d))
 
 $(NAME): $(SERVER) $(CLIENT)
 
@@ -67,12 +69,14 @@ $(DIRS):
 	$(MKDIR) "$@"
 
 clean:
-	$(RM) $(OBJS)
-	$(RM) $(B_OBJS)
+	$(RM) $(SERVER_OBJS)
+	$(RM) $(CLIENT_OBJS)
+	$(RM) $(SERVER_DEPS)
+	$(RM) $(CLIENT_DEPS)
 
 fclean: clean
-	$(RM) $(NAME)
-	$(RM) $(OUT_DIR)$(LIBFT)
+	$(RM) $(CLIENT)
+	$(RM) $(SERVER)
 
 re: fclean all
 
