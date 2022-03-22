@@ -1,0 +1,9 @@
+CompileFlags:
+  Add: [
+    -Wall,
+    -Werror,
+    -Wextra,
+    -I../include,
+    -I../libft,
+    -I/goinfre/swaegene/homebrew/include,
+  ]
