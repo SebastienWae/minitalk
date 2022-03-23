@@ -8,3 +8,4 @@
 server
 client
 debug/
+test/*.test
