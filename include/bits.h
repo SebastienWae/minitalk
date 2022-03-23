@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_sender.h                                    :+:      :+:    :+:   */
+/*   bits.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swaegene <swaegene@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seb <seb@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 15:48:40 by swaegene          #+#    #+#             */
-/*   Updated: 2022/03/22 18:34:58 by swaegene         ###   ########.fr       */
+/*   Created: 2022/03/23 13:39:12 by seb               #+#    #+#             */
+/*   Updated: 2022/03/23 14:23:29 by seb              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNAL_SENDER_H
-# define SIGNAL_SENDER_H
+#ifndef BITS_H
+# define BITS_H
 
-int		send_message_to_pid(char *p, char *msg);
-void	ctob(char c, int b_msg[8]);
+void	bytetobits(char b, char bits[8]);
+char	bitstobyte(char bits[8]);
 
 #endif

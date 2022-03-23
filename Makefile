@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swaegene <swaegene@student.42.fr>          +#+  +:+       +#+         #
+#    By: seb <seb@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/22 13:33:22 by swaegene          #+#    #+#              #
-#    Updated: 2022/03/22 18:20:52 by swaegene         ###   ########.fr        #
+#    Updated: 2022/03/23 15:09:33 by seb              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,8 +45,8 @@ CFLAGS += -Wall -Werror -Wextra
 CPPFLAGS += -I$(INC_DIR) -I$(FT_PRINTF_INC_DIR) -I$(LIBFT_DIR) -MD
 LDFLAGS += -L$(FT_PRINTF_DIR) -lftprintf -L$(LIBFT_DIR) -lft
 
-CLIENT_SRCS = client.c signal_sender.c
-SERVER_SRCS = server.c
+CLIENT_SRCS = client.c bits.c
+SERVER_SRCS = server.c bits.c
 CLIENT_OBJS = $(addprefix $(OUT_DIR),$(CLIENT_SRCS:%.c=%.o))
 SERVER_OBJS = $(addprefix $(OUT_DIR),$(SERVER_SRCS:%.c=%.o))
 CLIENT_DEPS = $(addprefix $(OUT_DIR),$(CLIENT_SRCS:%.c=%.d))
@@ -55,10 +55,10 @@ SERVER_DEPS = $(addprefix $(OUT_DIR),$(SERVER_SRCS:%.c=%.d))
 $(NAME): $(SERVER) $(CLIENT)
 
 $(CLIENT): $(DIRS) $(CLIENT_OBJS) $(FT_PRINTF_DIR)$(FT_PRINTF) $(LIBFT_DIR)$(LIBFT)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(CLIENT_OBJS) -o $@
+	$(CC) $(CFLAGS) $(CLIENT_OBJS) $(LDFLAGS) -o $@
 
 $(SERVER): $(DIRS) $(SERVER_OBJS) $(FT_PRINTF_DIR)$(FT_PRINTF) $(LIBFT_DIR)$(LIBFT)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(SERVER_OBJS) -o $@
+	$(CC) $(CFLAGS) $(SERVER_OBJS) $(LDFLAGS) -o $@
 
 all: $(NAME)
 
