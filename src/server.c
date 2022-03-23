@@ -6,35 +6,64 @@
 /*   By: seb <seb@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:33:54 by swaegene          #+#    #+#             */
-/*   Updated: 2022/03/23 16:13:45 by seb              ###   ########.fr       */
+/*   Updated: 2022/03/23 20:43:29 by seb              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_printf.h>
 #include <bits.h>
-#include <unistd.h>
+#include <ft_printf.h>
+#include <libft.h>
 #include <signal.h>
+#include <unistd.h>
+
+void	print_message(char c)
+{
+	static char	*str;
+	char		*tmp;
+
+	if (!str)
+		str = ft_calloc(1, sizeof(char));
+	if (!c)
+	{
+		ft_printf("%s\n", str);
+		free(str);
+		str = NULL;
+	}
+	else
+	{
+		tmp = str;
+		str = malloc(sizeof(char) * (ft_strlen(str) + 2));
+		ft_strlcpy(str, tmp, ft_strlen(tmp) + 2);
+		free(tmp);
+		ft_strlcat(str, &c, ft_strlen(str) + 2);
+	}
+}
 
 void	sigsur_handler(int signum, siginfo_t *info, void *context)
 {
 	static unsigned char	i;
-	static char				bits[8];
+	static char				*bits;
+	static int				pid;
+	char					c;
 
-	(void)info;
 	(void)context;
+	if (!bits)
+		bits = ft_calloc(8, sizeof(char));
+	pid = info->si_pid;
 	if (signum == SIGUSR1)
 		bits[i] = 1;
-	if (signum == SIGUSR2)
-		bits[i] = 0;
-	if (signum == SIGUSR1 || signum == SIGUSR2)
+	if (++i == 8)
 	{
-		i++;
-		if (i == 8)
-		{
-			ft_printf("%c", bitstobyte(bits));
-			i = 0;
-		}
+		i = 0;
+		c = bitstobyte(bits);
+		free(bits);
+		bits = NULL;
+		print_message(c);
+		if (!c)
+			kill(pid, SIGUSR1);
 	}
+	usleep(10);
+	kill(pid, SIGUSR2);
 }
 
 int	main(void)
