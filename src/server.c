@@ -6,7 +6,7 @@
 /*   By: swaegene <swaegene@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:33:54 by swaegene          #+#    #+#             */
-/*   Updated: 2022/03/24 14:02:21 by swaegene         ###   ########.fr       */
+/*   Updated: 2022/03/24 14:07:20 by swaegene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_message(char c)
 		str = ft_calloc(1, sizeof(char));
 	if (!c)
 	{
-		ft_printf("%s\n", str);
+		ft_printf("%s", str);
 		free(str);
 		str = NULL;
 	}
@@ -71,7 +71,7 @@ int	main(void)
 	sigset_t			block_mask;
 
 	pid = getpid();
-	ft_printf("PID: %d\n", pid);
+	ft_printf("%d\n", pid);
 	sigemptyset(&block_mask);
 	sigaddset(&block_mask, SIGINT);
 	sigaddset(&block_mask, SIGQUIT);
