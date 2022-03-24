@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seb <seb@student.42.fr>                    +#+  +:+       +#+         #
+#    By: swaegene <swaegene@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/22 13:33:22 by swaegene          #+#    #+#              #
-#    Updated: 2022/03/23 15:09:33 by seb              ###   ########.fr        #
+#    Updated: 2022/03/24 14:32:58 by swaegene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ CPPFLAGS += -I$(INC_DIR) -I$(FT_PRINTF_INC_DIR) -I$(LIBFT_DIR) -MD
 LDFLAGS += -L$(FT_PRINTF_DIR) -lftprintf -L$(LIBFT_DIR) -lft
 
 CLIENT_SRCS = client.c bits.c
-SERVER_SRCS = server.c bits.c
+SERVER_SRCS = server.c bits.c utils.c
 CLIENT_OBJS = $(addprefix $(OUT_DIR),$(CLIENT_SRCS:%.c=%.o))
 SERVER_OBJS = $(addprefix $(OUT_DIR),$(SERVER_SRCS:%.c=%.o))
 CLIENT_DEPS = $(addprefix $(OUT_DIR),$(CLIENT_SRCS:%.c=%.d))

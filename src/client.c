@@ -6,7 +6,7 @@
 /*   By: swaegene <swaegene@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:33:25 by swaegene          #+#    #+#             */
-/*   Updated: 2022/03/24 14:01:30 by swaegene         ###   ########.fr       */
+/*   Updated: 2022/03/24 14:15:12 by swaegene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,20 @@
 void	send_bits_to_pid(int pid, char bits[8])
 {
 	int	i;
+	int	r;
 
 	i = 0;
 	while (i < 8)
 	{
 		if (bits[i])
-			kill(pid, SIGUSR1);
+			r = kill(pid, SIGUSR1);
 		else
-			kill(pid, SIGUSR2);
+			r = kill(pid, SIGUSR2);
+		if (r == -1)
+		{
+			ft_printf("ERR\n");
+			exit(1);
+		}
 		i++;
 		usleep(100);
 	}

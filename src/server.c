@@ -6,7 +6,7 @@
 /*   By: swaegene <swaegene@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:33:54 by swaegene          #+#    #+#             */
-/*   Updated: 2022/03/24 14:07:20 by swaegene         ###   ########.fr       */
+/*   Updated: 2022/03/24 14:32:49 by swaegene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <libft.h>
 #include <signal.h>
 #include <unistd.h>
+#include <utils.h>
 
 void	print_message(char c)
 {
@@ -22,7 +23,11 @@ void	print_message(char c)
 	char		*tmp;
 
 	if (!str)
+	{
 		str = ft_calloc(1, sizeof(char));
+		if (!str)
+			return ;
+	}
 	if (!c)
 	{
 		ft_printf("%s", str);
@@ -32,10 +37,8 @@ void	print_message(char c)
 	else
 	{
 		tmp = str;
-		str = malloc(sizeof(char) * (ft_strlen(str) + 2));
-		ft_strlcpy(str, tmp, ft_strlen(tmp) + 2);
+		str = ft_strappend_c(str, c);
 		free(tmp);
-		ft_strlcat(str, &c, ft_strlen(str) + 2);
 	}
 }
 
@@ -48,7 +51,11 @@ void	sigsur_handler(int signum, siginfo_t *info, void *context)
 
 	(void)context;
 	if (!bits)
+	{
 		bits = ft_calloc(8, sizeof(char));
+		if (!bits)
+			return ;
+	}
 	pid = info->si_pid;
 	if (signum == SIGUSR1)
 		bits[i] = 1;
