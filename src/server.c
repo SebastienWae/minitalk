@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seb <seb@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swaegene <swaegene@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:33:54 by swaegene          #+#    #+#             */
-/*   Updated: 2022/03/23 20:43:29 by seb              ###   ########.fr       */
+/*   Updated: 2022/03/24 14:02:21 by swaegene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void	sigsur_handler(int signum, siginfo_t *info, void *context)
 		if (!c)
 			kill(pid, SIGUSR1);
 	}
-	usleep(10);
-	kill(pid, SIGUSR2);
 }
 
 int	main(void)
